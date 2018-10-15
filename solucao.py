@@ -13,7 +13,7 @@ opcoesBote = [
 
 def reconstituicao(j, solucao):
     ma = ['p', 'p', 'p', 'c', 'c', 'c']
-    mo = ['o','o','o','o','o','o']
+    mo = ['o','o','o','o','o','o'] 
 
     print("\n\n------------Matrizes zeradas------------\n\n")
 
