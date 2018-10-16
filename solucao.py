@@ -81,7 +81,7 @@ def contaMorte(ma,mo):
     if(vivo==1):
         print("Os padres estão vivos")
     else:
-        print("Há padres mortos\n----------------------------------------------");
+        print("Há padres mortos\n----------------------------------------------")
 
 def boteAO(np, nc):#bote de atual para oposto np número de padres nc número de canibais
     npo = npa = np
@@ -133,7 +133,7 @@ def jogada(sentido,x,y):
     if(sentido==1):
         boteOA(x,y)
     else:
-        boteAO(x,y)
+        boteAO(x,y) 
 
 def escolheTripulacao():
     solucao = []
@@ -141,6 +141,7 @@ def escolheTripulacao():
         solucao.append('nul')
     ops = 0
     prox = False
+    refaz = False
     j = -1 #jogada
     for i in range(0,5000):
         j += 1
@@ -161,13 +162,22 @@ def escolheTripulacao():
                         break
 
         solucao[j] = ops
+        
 
         if(j % 2 > 0):
-            print("\noa \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
-            jogada(1,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
+            np, nc = NumeroPC(mo)
+            if((np >= opcoesBote[solucao[j]][0])or(nc >= opcoesBote[solucao[j]][1])):
+                print("\noa \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
+                jogada(1,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
+            else:
+                refaz = True
         elif(j % 2 == 0):
-            print("\nao \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
-            jogada(0,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
+            np, nc = NumeroPC(ma)
+            if((np >= opcoesBote[solucao[j]][0])or(nc >= opcoesBote[solucao[j]][1])):
+                print("\nao \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
+                jogada(0,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
+            else:
+                refaz = True
 
         mostraJoagada(ma,mo)
         
@@ -176,7 +186,7 @@ def escolheTripulacao():
             print("\npppppp\n")
             break
 
-        if(testeMorte(ma,mo)==0):
+        if(testeMorte(ma,mo)==0 or refaz == True):
             prox = True
             #print(solucao)
             solucao[j] = 'nul'
