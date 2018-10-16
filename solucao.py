@@ -2,7 +2,7 @@ import random
 from time import time
 import numpy
 ma = ['p', 'p', 'p', 'c', 'c', 'c']
-mo = ['o','o','o','o','o','o']
+mo = ['*','*','*','*','*','*']
 opcoesBote = [
         [0,1], #coluna 0 padres coluna 1 canibais
         [1,0],
@@ -13,7 +13,7 @@ opcoesBote = [
 
 def reconstituicao(j, solucao):
     ma = ['p', 'p', 'p', 'c', 'c', 'c']
-    mo = ['o','o','o','o','o','o'] 
+    mo = ['*','*','*','*','*','*'] 
 
     print("\n\n------------Matrizes zeradas------------\n\n")
 
@@ -99,12 +99,12 @@ def boteAO(np, nc):#bote de atual para oposto np número de padres nc número de
                 
     for i in range(0,6):
         if(ma[i]=='p' and npa>0):
-            ma[i]='o'
+            ma[i]='*'
             npa = npa -1
 
     for i in range(0,6):
         if(ma[i]=='c' and nca>0):
-           ma[i]='o'
+           ma[i]='*'
            nca = nca -1     
     return 0
 
@@ -121,11 +121,11 @@ def boteOA(np, nc): #bote de oposto para atual
             nco=nco-1
     for i in range(0,6):
         if (mo[i]=='p' and npa!=0):
-            mo[i]='o'
+            mo[i]='*'
             npa = npa-1
     for i in range(0,6):
         if(mo[i]=='c' and nca!=0):
-            mo[i]='o'
+            mo[i]='*'
             nca=nca-1
     return 0
 
@@ -143,10 +143,12 @@ def escolheTripulacao():
     prox = False
     refaz = False
     j = -1 #jogada
-    for i in range(0,5000):
+    for i in range(0,50000):
         j += 1
-        if j > 6:
-            j -= 1
+        if j > 11:
+            j -= 2
+            solucao[j+1] = 'nul'
+            reconstituicao(j,solucao)
             prox = True
         
         if(prox == True):
@@ -164,14 +166,14 @@ def escolheTripulacao():
         solucao[j] = ops
         
 
-        if(j % 2 > 0):
+        if(j % 2 > 0):# oposta atual
             np, nc = NumeroPC(mo)
             if((np >= opcoesBote[solucao[j]][0])or(nc >= opcoesBote[solucao[j]][1])):
                 print("\noa \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
                 jogada(1,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
             else:
                 refaz = True
-        elif(j % 2 == 0):
+        elif(j % 2 == 0): #atual oposta
             np, nc = NumeroPC(ma)
             if((np >= opcoesBote[solucao[j]][0])or(nc >= opcoesBote[solucao[j]][1])):
                 print("\nao \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
