@@ -19,9 +19,9 @@ def reconstituicao(j, solucao):
 
     for i in range(0, j):
         if(i % 2 == 0):
-            jogada(1,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
+            jogada(1,opcoesBote[solucao[i]][0],opcoesBote[solucao[i]][1])
         else:
-            jogada(0,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
+            jogada(0,opcoesBote[solucao[i]][0],opcoesBote[solucao[i]][1])
 
 def mostraJoagada(ma,mo):
     print("ma",ma)
@@ -146,9 +146,9 @@ def escolheTripulacao():
     for i in range(0,50000):
         j += 1
         if j > 11:
-            j -= 2
+            j -= 1
             solucao[j+1] = 'nul'
-            reconstituicao(j,solucao)
+            reconstituicao(j-1,solucao)
             prox = True
         
         if(prox == True):
@@ -168,17 +168,21 @@ def escolheTripulacao():
 
         if(j % 2 > 0):# oposta atual
             np, nc = NumeroPC(mo)
-            if((np >= opcoesBote[solucao[j]][0])or(nc >= opcoesBote[solucao[j]][1])):
-                print("\noa \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
+            if((np >= opcoesBote[solucao[j]][0])and(nc >= opcoesBote[solucao[j]][1])):
+                print("\noa \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\nj=",j)
                 jogada(1,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
             else:
+                print("\noa \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
+                print("\nj=",j,"\nnão feita")
                 refaz = True
         elif(j % 2 == 0): #atual oposta
             np, nc = NumeroPC(ma)
-            if((np >= opcoesBote[solucao[j]][0])or(nc >= opcoesBote[solucao[j]][1])):
-                print("\nao \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
+            if((np >= opcoesBote[solucao[j]][0])and(nc >= opcoesBote[solucao[j]][1])):
+                print("\nao \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\nj=",j)
                 jogada(0,opcoesBote[solucao[j]][0],opcoesBote[solucao[j]][1])
             else:
+                print("\noa \n[",opcoesBote[solucao[j]][0],",",opcoesBote[solucao[j]][1],"]\n")
+                print("\nj=",j,"\nnão feita")
                 refaz = True
 
         mostraJoagada(ma,mo)
